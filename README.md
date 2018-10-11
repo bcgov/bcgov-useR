@@ -8,24 +8,11 @@ If you have bcgovr installed and you use RStudio, click the 'Insert BCDevex Badg
 bcgov-useR
 ============================
 
-### Usage
+This repository is intended to house presentation materials from bcgov-useR day. If you have participated in a bcgov-useR day and would like to contribute your presentation materials to this repository please open a pull request. Individual useR days are given their own sub-directory. Please contribute your materials to that sub-directory. 
 
-Describe data being used (links), and how to run. Eg:
+### Why?
+To share practices, inspire each other & support continuous learning using [R](https://www.r-project.org/) for data science in the BC Public Service
 
-There are four core scripts that are required for the analysis, they need to be run in order:
-
--   01\_clean.R
--   02\_analysis.R
--   03\_visualize.R
--   04\_output.R
-
-#### Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-## basic example code
-```
 
 ### Project Status
 
