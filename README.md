@@ -1,17 +1,21 @@
 <a id="devex-badge" rel="Inspiration" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="An idea being explored and shaped. Open for discussion, but may never go anywhere." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/inspiration.svg" title="An idea being explored and shaped. Open for discussion, but may never go anywhere." /></a>
 
-bcgov-useR (2018)
+bcgov-useR-days
 ============================
 
-This repository is intended to house presentation materials from bcgov-useR day. If you have participated in a bcgov-useR day and would like to contribute your presentation materials to this repository please open a pull request. Individual useR days are given their own sub-directory. Please contribute your materials to that sub-directory. 
+This repository is intended to house presentation materials from bcgov-useR days. If you have participated in a bcgov-useR day and would like to contribute your presentation materials to this repository please open a pull request. Individual useR days are given their own sub-directory. Please contribute your materials to that sub-directory. 
 
 ### Presentations
+
+## bcgov useR day (Victoria 2018-10-11)
 
 [R from Start-to-Finish: A Case Study Using the Voter List Quality Measurement (Julie Hawkins)](2018/jhawkins_case_study/pdf/jhawkins_case_study.pdf)
 
 [Reproducible Spatial Analysis with sf and bcmaps (Andy Teucher)](2018/ateucher_sf_bcmaps/pdf/ateucher_sf_bcmaps.pdf)
 
 [Version Control & Sharing Your Code with bcgovr (Sam Albers)](2018/salbers_bcgovr/pdf/bcgov_useR_Albers.pdf)
+
+[Don't Code Alone (Stephanie Hazlitt)](2018/shazlitt_dont_code_alone/pdf/shazlitt_dont_code_alone.pdf)
 
 ### Why?
 To share practices, inspire each other & support continuous learning using [R](https://www.r-project.org/) for data science in the BC Public Service
