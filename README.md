@@ -5,6 +5,14 @@ bcgov-useR (2018)
 
 This repository is intended to house presentation materials from bcgov-useR day. If you have participated in a bcgov-useR day and would like to contribute your presentation materials to this repository please open a pull request. Individual useR days are given their own sub-directory. Please contribute your materials to that sub-directory. 
 
+### Presentations
+
+[R from Start-to-Finish: A Case Study Using the Voter List Quality Measurement (Julie Hawkins)](2018/jhawkins_case_study/pdf/jhawkins_case_study.pdf)
+
+[Reproducible Spatial Analysis with sf and bcmaps (Andy Teucher)](2018/ateucher_sf_bcmaps/pdf/ateucher_sf_bcmaps.pdf)
+
+[Version Control & Sharing Your Code with bcgovr (Sam Albers)](2018/salbers_bcgovr/pdf/bcgov_useR_Albers.pdf)
+
 ### Why?
 To share practices, inspire each other & support continuous learning using [R](https://www.r-project.org/) for data science in the BC Public Service
 
