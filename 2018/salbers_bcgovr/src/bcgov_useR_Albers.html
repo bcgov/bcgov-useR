@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Version Control &amp; Sharing Your Code with bcgovr</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Sam Albers - Knowledge Management Branch, BC Ministry of Environment and Climate Change Strategy" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css/hygge.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Version Control &amp; Sharing Your Code with bcgovr
+## bcgov useR day
+### Sam Albers - Knowledge Management Branch, BC Ministry of Environment and Climate Change Strategy
+### 2018/10/11
+
+---
+
+
+
+layout: true
+class: inverse
+---
+
+
+
+
+
+# Version Control and Sharing
+.pull-left[
+## Does this look familiar?
+```
+$ ls -1
+analysis_script.R
+analysis_script_FINAL.R
+analysis_script_FINAL_last_FINAL.R
+analysis_script_FINAL_ok I promise last one.R
+analysis_script_FINAL_very_LAST_FINAL.R
+analysis_script_v1.R
+analysis_script_v1_b.R
+"analysis_script_v2_Han's edits.R"
+analysis_script_v2_with_one_change.R
+analysis_script_v3_2018-01-31.R
+analysis_script_v2.5.R
+analysis_script_just_trying_something.R
+analysis_script_modification_for_lando.R
+analysis_script_leia_edits.R
+analysis_script_leia_edits_plus_jabba.R
+```
+]
+
+--
+
+.pull-right[
+## Idea of sharing code?
+&lt;center&gt;&lt;img src="https://media.giphy.com/media/3ohs7KViF6rA4aan5u/giphy.gif" style="width: 550px;"/&gt;&lt;/center&gt;
+]
+
+---
+
+class: center
+background-image: url(https://s16815.pcdn.co/wp-content/uploads/2015/07/20140528-hands-raised1.png)
+background-size: cover
+# Who has used git?
+--
+
+# Who has pushed code to GitHub?
+
+--
+# Who has pushed code to bcgov GitHub?
+
+---
+# An R package to automate set up and sharing of R projects in bcgov GitHub following bcgov guidelines
+
+&lt;center&gt;&lt;img src="https://raw.githubusercontent.com/bcgov/bcgovr/master/tools/readme/bcgovr_hex_hi_res.png" style="width: 400px;"/&gt;&lt;/center&gt;
+
+
+---
+
+.pull-left[
+&lt;center&gt;&lt;img src="https://raw.githubusercontent.com/bcgov/bcgovr/master/tools/readme/bcgovr_hex_hi_res.png" style="width: 550px;"/&gt;&lt;/center&gt;
+]
+
+.pull-right[
+# bcgovr does not help with:
+.large[
+- Ensuring you have the appropriate [permission](https://github.com/bcgov/BC-Policy-Framework-For-GitHub/blob/master/BC-Open-Source-Development-Employee-Guide/Content-Approval-Checklist.md) to create repos on bcgov GitHub
+- Creating a GitHub account with two factor authentication
+- Setting up personal access tokens
+- Accidently committing sensitive material to GitHub
+- Probably many other things...
+]
+
+]
+
+---
+
+.pull-left[
+&lt;center&gt;&lt;img src="https://raw.githubusercontent.com/bcgov/bcgovr/master/tools/readme/bcgovr_hex_hi_res.png" style="width: 550px;"/&gt;&lt;/center&gt;
+]
+
+.pull-right[
+# bcgovr helps with:
+.large[
+- Adding the [required](https://github.com/bcgov/BC-Policy-Framework-For-GitHub/blob/master/BC-Open-Source-Development-Employee-Guide/README.md) files to meet BC government requirements that govern our use of GitHub.
+- Creating a repository on GitHub directly from within R
+- Setting up a project or package in R
+- Easily adding badges and license headers to the files you create
+]
+]
+---
+.pull-left[
+&lt;center&gt;&lt;img src="https://raw.githubusercontent.com/bcgov/bcgovr/master/tools/readme/bcgovr_hex_hi_res.png" style="width: 550px;"/&gt;&lt;/center&gt;
+]
+
+.pull-right[
+# Installation and loading
+
+
+```r
+if(!requireNamespace("remotes")) {
+  install.packages("remotes")
+}
+remotes::install_github("bcgov/bcgovr")
+library(bcgovr)
+```
+]
+
+---
+## before_bcgovr::Setting up a new project 
+.large[
+- Create a new folder
+- Make that a RStudio project
+
+
+## bcgovr::Pushing your code to GitHub
+
+
+- Get your requirements in place
+- Get folder under version control
+- Create a repo on GitHub
+
+
+## git::Working under version control
+
+- Customize the README file
+- Add the presentation
+- A bit of git
+]
+---
+
+## Get your requirements in place
+
+```r
+use_bcgov_req(rmarkdown = FALSE, licence = "cc-by")
+```
+
+
+## Get folder under version control
+
+```r
+use_bcgov_git(rmarkdown = FALSE, licence = "cc-by")
+```
+
+## Create a repo on GitHub
+
+```r
+use_bcgov_github(organisation = "bcgov", rmarkdown = FALSE, licence = "cc-by")
+```
+
+---
+## Edit README
+.large[
+
+- Customize text for the repo
+- Add BCDevExchange badge
+ 
+ ]
+
+```bash
+git add README.md
+git commit -m "update readme"
+git push origin master
+```
+
+---
+
+## Create a folder for this year
+
+```r
+dir.create("2018")
+```
+
+## Add content
+.large[
+- Add this presentation R markdown file
+]
+
+```bash
+git add 2018/bcgov_useR_Albers.Rmd 
+git commit -m "add Albers presentation"
+```
+
+---
+
+## A Git Problem
+&lt;center&gt;&lt;img src="https://media.giphy.com/media/WwNtKiEuKH6FO/giphy.gif" style="width: 850px;"/&gt;&lt;/center&gt;
+
+
+---
+
+## A Git Problem
+I forgot to add a license header to a file to my last commit
+
+```bash
+# make your change
+git add 2018/bcgov_useR_Albers.Rmd 
+# stage the file again
+git commit --amend --no-edit
+# commit with the same message
+git push origin master
+# push to remote
+```
+
+
+---
+# What have we done
+- Create repository on BCGov github 
+- Populated it with required elements of a public facing repo
+- Used git
+- Shared some code
+
+# What you can do
+- Add your presentation to this repo via a pull request
+
+# Resources
+- [New Cdn Gov Repos](https://twitter.com/cdngovrepos)
+- [Happy Git with R](http://happygitwithr.com/)
+- [Getting Unstuck with Git](http://inundata.org/lectures/git/#/)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

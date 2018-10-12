@@ -1,0 +1,32 @@
+.remark-slide-content {
+  background-size: contain;
+}
+
+.title-slide {
+  background-image: url(https://i.imgur.com/fUzv0V2.gif);
+  background-color: white;
+}
+
+.title-slide h1, .title-slide h2, .title-slide h3 {
+  color: #2F4F4F;
+}
+
+.leaflet {
+  margin: auto !important;
+}
+
+.img-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 550px;
+}
+
+.pink span {
+  color: red;
+}
+
+img[alt=size400] { width: 400px; }
+img[alt=size500] { width: 500px; }
+img[alt=size600] { width: 600px; }
+img[alt=size800] { width: 800px; }
