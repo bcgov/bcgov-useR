@@ -1,13 +1,13 @@
 <a id="devex-badge" rel="Inspiration" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="An idea being explored and shaped. Open for discussion, but may never go anywhere." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/inspiration.svg" title="An idea being explored and shaped. Open for discussion, but may never go anywhere." /></a>
 
-bcgov-useR-days
+bcgov-useR
 ============================
 
 This repository is intended to house presentation materials from bcgov-useR days. If you have participated in a bcgov-useR day and would like to contribute your presentation materials to this repository please open a pull request. Individual useR days are given their own sub-directory. Please contribute your materials to that sub-directory. 
 
 ### Presentations
 
-## bcgov useR day (Victoria 2018-10-11)
+#### bcgov useR day (Victoria 2018-10-11)
 
 [R from Start-to-Finish: A Case Study Using the Voter List Quality Measurement (Julie Hawkins)](2018/jhawkins_case_study/pdf/jhawkins_case_study.pdf)
 
