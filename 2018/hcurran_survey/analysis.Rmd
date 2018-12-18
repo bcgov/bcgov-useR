@@ -1,0 +1,372 @@
+---
+date: "`r Sys.Date()`"
+author: "Hannah Curran and Julie Hawkins, BC Stats"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load_libraries, echo = FALSE, include = FALSE}
+library(tidyverse)
+
+```
+
+```{r load_data, echo=FALSE, include = FALSE}
+#orig_data contains NA's 
+orig_data <- read_csv("data.csv")
+
+#this data does NOT contain the people who didn't fill out the survey (NA's)
+data <- orig_data[complete.cases(orig_data[3:5]),]
+```
+
+```{r functions, echo = FALSE}
+#function for finding percentages of valid response (filters out the DK's coded as 9)
+get.tab <- function(data, question){
+  question <- enquo(question)
+  tab <- data %>%
+    group_by(!!(question)) %>%
+    filter(!!(question) != "9") %>% 
+    summarize(Frequency = n()) %>%
+    mutate(Percent = 100*round(Frequency/sum(Frequency), digits = 2)) %>%
+    select(-Frequency)
+
+  tab2 <- tab %>%
+  spread(key = !!(question), value = Percent)
+
+}
+
+#test <- get.tab(data = data, question = Q02)
+
+#function for finding the number of DK's for each question
+get.DK <- function(data, question){
+  question <- enquo(question)
+  tab <- data %>% 
+    group_by(!!(question)) %>% 
+    filter(!!(question) == "9") %>% 
+    summarize(DKCount = n()) %>% 
+    select(DKCount)
+}
+
+#test <- get.DK(data, Q07)
+
+#finds the mean score of question out of 5
+mean.score_5pt <- function(data, question){
+  question <- enquo(question)
+  tab <- data %>% 
+    filter(!!(question) != "9") %>% 
+    summarize(Mean_Score = round(mean(!!(question)), digits = 2))
+
+}
+
+#test <- mean.score_5pt(data, Q02)
+
+#finds the mean score of question out of 100
+mean.score <- function(data, question){
+  question <- enquo(question)
+  tab <- data %>% 
+    filter(!!(question) != "9") %>% 
+    summarize(Mean_Score = round((mean(!!question)-1)/0.04))
+
+}
+
+#test <- mean.score(data, Q02)
+```
+
+```{r experience, echo=FALSE,warning=FALSE}
+#getting Q01 DK count and valid percentage of responses
+Q01DK <- get.DK(data, Q01) #1 DK
+Q01tab <- get.tab(data, Q01)
+```
+
+```{r agreement_pt1, echo=FALSE,warning=FALSE}
+#Q02DK <- get.DK(data, Q02) #1 DK
+Q02tab <- get.tab(data = data, question = Q02) #this gives Q02tab without the DK's
+Q02tab$"3" <- as.numeric("0") #adding in the missing row manually -- dplyr version 0.8 (~ Jan. 2019) update will hopefully mean this step won't be necessary
+Q02tab <- Q02tab %>% 
+  select("1", "2", "3", "4", "5") #orders the table with the newly added column(s)
+Q02mean <- mean.score(data, Q02) #finds mean score of Q02 (out of 100)
+
+
+#Q03DK <- get.DK(data, Q03) #2 DK's
+Q03tab <- get.tab(data = data, question = Q03)
+Q03tab$"3" <- as.numeric("0") #adding in the missing row(s) manually
+Q03tab$"2" <- as.numeric("0")
+Q03tab <- Q03tab %>% 
+  select("1", "2", "3", "4", "5")
+Q03mean <- mean.score(data, Q03)
+
+
+# Q04DK <- get.DK(data, Q04) #0 DK's
+Q04tab <- get.tab(data = data, question = Q04)
+Q04tab$"3" <- as.numeric("0")
+Q04tab <- Q04tab %>% 
+  select("1", "2", "3", "4", "5")
+Q04mean <- mean.score(data, Q04)
+
+#combining all the agreement question (part1) means into one data frame
+mean_agreept1 <- rbind(Q02mean, Q03mean, Q04mean)
+```
+
+```{r side_note, echo=FALSE, warning=FALSE}
+# just me figuring out how to map once I've used enquo, !!
+# figured this out much later, so this is not used anywhere in the code
+# https://www.rstudio.com/resources/webinars/tidy-eval/
+
+# temp <- c("Q02", "Q03", "Q04")
+# agreement_pt1 <- map(syms(temp), get.tab, data = data) #the syms part is the what makes it work
+# rm(temp)
+# agreement_pt1
+#
+# same as above just without having to type out the column names
+# temp <- colnames(data)[3:5]
+# agreement_pt1 <- map(syms(temp), get.tab, data = data)
+# rm(temp)
+# agreement_pt1
+
+#And it works!!
+```
+
+```{r frequency, echo=FALSE, warning=FALSE}
+# Q05DK <- get.DK(data, Q05) #0 DK's
+Q05tab <- get.tab(data = data, question = Q05)
+#Q05mean <- mean.score(data, Q05)
+
+
+# Q06DK <- get.DK(data, Q06) #0 DK's
+Q06tab <- get.tab(data = data, question = Q06)
+#Q06mean <- mean.score(data, Q06)
+
+
+Q07DK <- get.DK(data, Q07) #4 DK's
+#round(100*(Q07DK$DKCount/length(data$QCOMP)))
+Q07tab <- get.tab(data = data, question = Q07)
+#adding in the missing row(s) manually
+Q07tab$"3" <- as.numeric("0")
+#Q07mean <- mean.score(data, Q07)
+
+
+Q08DK <- get.DK(data, Q08) #11 DK's
+Q08tab <- get.tab(data = data, question = Q08)
+#DK response rate:
+#round(100*(Q08DK$DKCount/length(data$QCOMP)))
+#Q08mean <- mean.score(data, Q08)
+
+
+Q09DK <- get.DK(data, Q09) #5 DK's
+Q09tab <- get.tab(data = data, question = Q09)
+#round(100*(Q09DK$DKCount/length(data$QCOMP)))
+#Q09mean <- mean.score(data, Q09)
+
+```
+
+```{r likelihood, echo=FALSE, warning=FALSE}
+# Q10DK <- get.DK(data, Q10) #0 DK's
+Q10tab <- get.tab(data = data, question = Q10)
+#Q10mean <- mean.score(data, Q10)
+
+
+Q11DK <- get.DK(data, Q11) #2 DK's
+Q11tab <- get.tab(data = data, question = Q11)
+Q11tab$"1" <- as.numeric("0") #adding in the missing row(s) manually
+Q11tab <- Q11tab %>% 
+  select("1", "2", "3")
+#Q11mean <- mean.score(data, Q11)
+
+
+Q12DK <- get.DK(data, Q12) #8 DK's
+Q12tab <- get.tab(data = data, question = Q12)
+Q12tab$"1" <- as.numeric("0") #adding in the missing row(s) manually
+Q12tab <- Q12tab %>% 
+  select("1", "2", "3")
+#Q12mean <- mean.score(data, Q12)
+```
+
+```{r agreement_pt2, echo=FALSE, warning=FALSE}
+
+#Q13DK <- get.DK(data, Q13) #0 DK's
+Q13tab <- get.tab(data = data, question = Q13)
+Q13tab$"1" <- as.numeric("0")
+Q13tab$"2" <- as.numeric("0")
+Q13tab <- Q13tab %>% 
+  select("1", "2", "3", "4", "5")
+Q13mean <- mean.score(data, Q13)
+
+
+Q14DK <- get.DK(data, Q14) #1 DK
+Q14tab <- get.tab(data, Q14)
+Q14tab$"1" <- as.numeric("0")
+Q14tab <- Q14tab %>% 
+  select("1", "2", "3", "4", "5")
+Q14mean <- mean.score(data, Q14)
+
+
+Q15DK <- get.DK(data, Q15) #10 DK's
+Q15tab <- get.tab(data, Q15)
+Q15tab$"1" <- as.numeric("0")
+Q15tab <- Q15tab %>% 
+  select("1", "2", "3", "4", "5")
+Q15mean <- mean.score(data, Q15)
+
+#Q16DK <- get.DK(data, Q16) #0 DK's
+Q16tab <- get.tab(data, Q16)
+Q16tab$"1" <- as.numeric("0")
+Q16tab$"2" <- as.numeric("0")
+Q16tab <- Q16tab %>% 
+  select("1", "2", "3", "4", "5")
+Q16mean <- mean.score(data, Q16)
+
+
+#Q17DK <- get.DK(data, Q17) #0 DK's
+Q17tab <- get.tab(data, Q17)
+Q17tab$"1" <- as.numeric("0")
+Q17tab$"2" <- as.numeric("0")
+Q17tab <- Q17tab %>% 
+  select("1", "2", "3", "4", "5")
+Q17mean <- mean.score(data, Q17)
+
+mean_agreept2 <- rbind(Q13mean, Q14mean, Q15mean, Q16mean, Q17mean)
+```
+
+```{r agreement_pt3, echo=FALSE, warning=FALSE}
+
+#Q18DK <- get.DK(data, Q18) #0 DK's
+Q18tab <- get.tab(data, Q18)
+Q18tab$"1" <- as.numeric("0")
+Q18tab$"2" <- as.numeric("0")
+Q18tab <- Q18tab %>% 
+  select("1", "2", "3", "4", "5")
+Q18mean <- mean.score(data, Q18)
+
+
+#Q19DK <- get.DK(data, Q19) #0 DK's
+Q19tab <- get.tab(data, Q19)
+Q19tab$"1" <- as.numeric("0")
+Q19tab <- Q19tab %>% 
+  select("1", "2", "3", "4", "5")
+Q19mean <- mean.score(data, Q19)
+
+
+#Q20DK <- get.DK(data, Q20) #0 DK's
+Q20tab <- get.tab(data, Q20)
+Q20tab$"1" <- as.numeric("0")
+Q20tab <- Q20tab %>% 
+  select("1", "2", "3", "4", "5")
+Q20mean <- mean.score(data, Q20)
+
+mean_agreept3 <- rbind(Q18mean, Q19mean, Q20mean)
+```
+
+![](1.png)
+
+![](2.png)
+
+
+
+
+### Experience
+
+
+
+|                                  | Heard about but not used |  Ran/read other people's code | Written some of my own code | Written most/all of my own code |
+|--------------------------------------------|:-----------------------:|:-----------------------------:|:---------------------------:|---------------------------------|
+| My experience with R before the event was: | `r Q01tab[1,1]`%         | `r Q01tab[1,2]`%              | `r Q01tab[1,3]`%             | `r Q01tab[1,4]`%                 |
+
+<br>
+
+***
+
+<br>
+
+###Pre-event Logistics
+
+
+|                                          | Strongly Disagree (1) |         2        |         3        |         4        | Strongly Agree (5) |        Mean Score       |
+|------------------------------------------|:---------------------:|:----------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|
+| The pre-event communication was useful.  |    `r Q02tab[1,1]`%   | `r Q02tab[1,2]`% | `r Q02tab[1,3]`% | `r Q02tab[1,4]`% |  `r Q02tab[1,5]`%  |  `r mean_agreept1[1,1]` |
+| It was easy to sign up for the event.    |    `r Q03tab[1,1]`%   | `r Q03tab[1,2]`% | `r Q03tab[1,3]`% | `r Q03tab[1,4]`% |  `r Q03tab[1,5]`%  | `r mean_agreept1[2,1] ` |
+| The location of the event worked for me. |    `r Q04tab[1,1]`%   | `r Q04tab[1,2]`% | `r Q04tab[1,3]`% | `r Q04tab[1,4]`% |  `r Q04tab[1,5]`%  | `r mean_agreept1[3,1] ` |
+
+
+<br>
+
+***
+
+<br>
+
+###Event Logistics
+
+|                         |       Less      |  About the same |       More      |
+|-------------------------|:---------------:|:---------------:|:---------------:|
+| Number of presentations | `r Q05tab[1,1]`% | `r Q05tab[1,2]`% | `r Q05tab[1,3]`% |
+| Length of presentations | `r Q06tab[1,1]`% | `r Q06tab[1,2]`% | `r Q06tab[1,3]`% |
+| Length of lunch break^1^   | `r Q07tab[1,1]`% | `r Q07tab[1,2]`% | `r Q07tab[1,3]`% |
+| Length of Help-A-Thon^2^   | `r Q08tab[1,1]`% | `r Q08tab[1,2]`% | `r Q08tab[1,3]`% |
+| Length of entire event^3^  | `r Q09tab[1,1]`% | `r Q09tab[1,2]`% | `r Q09tab[1,3]`% |
+
+
+<br>
+
+***
+
+<br>
+
+###Likelihood of Use After Event
+
+|                                |       Less /      |  About the same |       / More      |
+|--------------------------------|:---------------:|:---------------:|:---------------:|
+| Likelihood of using R          | `r Q10tab[1,1]`% | `r Q10tab[1,2]`% | `r Q10tab[1,3]`% |
+| Likelihood of using Git/GitHub | `r Q11tab[1,1]`% | `r Q11tab[1,2]`% | `r Q11tab[1,3]`% |
+| Likelihood of using Slack^4^      | `r Q12tab[1,1]`% | `r Q12tab[1,2]`% | `r Q12tab[1,3]`% |
+
+
+<br>
+
+***
+
+<br>
+
+###Content of the Day
+
+|                                                                                 | Strongly Disagree (1) |         2        |         3        |         4        | Strongly Agree (5) |        Mean Score       |
+|---------------------------------------------------------------------------------|:---------------------:|:----------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|
+| Learning about locally created packages (e.g., fasstr, bcmaps) was useful.      |    `r Q13tab[1,1]`%   | `r Q13tab[1,2]`% | `r Q13tab[1,3]`% | `r Q13tab[1,4]`% |  `r Q13tab[1,5]`%  |  `r mean_agreept2[1,1]` |
+| Learning about generic packages (e.g., shiny, flextable) was useful.            |    `r Q14tab[1,1]`%   | `r Q14tab[1,2]`% | `r Q14tab[1,3]`% | `r Q14tab[1,4]`% |  `r Q14tab[1,5]`%  | `r mean_agreept2[2,1] ` |
+| The format of the afternoon Help-A-Thon worked for me.^5^                          |    `r Q15tab[1,1]`%   | `r Q15tab[1,2]`% | `r Q15tab[1,3]`% | `r Q15tab[1,4]`% |  `r Q15tab[1,5]`%  | `r mean_agreept2[3,1] ` |
+| I was satisfied with the range of topics covered during the day.                |    `r Q16tab[1,1]`%   | `r Q16tab[1,2]`% | `r Q16tab[1,3]`% | `r Q16tab[1,4]`% |  `r Q16tab[1,5]`%  | `r mean_agreept2[4,1] ` |
+| Overall, the talks (e.g., icebreaker, keynote, presentations) were informative. |    `r Q17tab[1,1]`%   | `r Q17tab[1,2]`% | `r Q17tab[1,3]`% | `r Q17tab[1,4]`% |  `r Q17tab[1,5]`%  | `r mean_agreept2[5,1] ` |
+
+
+<br>
+
+***
+
+<br>
+
+###Overall Satisfaction
+
+|                                                                | Strongly Disagree (1) |         2        |         3        |         4        | Strongly Agree (5) |        Mean Score       |
+|----------------------------------------------------------------|:---------------------:|:----------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|
+| Overall, the bcgov useR event was useful.                      |    `r Q18tab[1,1]`%   | `r Q18tab[1,2]`% | `r Q18tab[1,3]`% | `r Q18tab[1,4]`% |  `r Q18tab[1,5]`%  |  `r mean_agreept3[1,1]` |
+| I would recommend the bcgov useR day to people interested in R. |    `r Q19tab[1,1]`%   | `r Q19tab[1,2]`% | `r Q19tab[1,3]`% | `r Q19tab[1,4]`% |  `r Q19tab[1,5]`%  | `r mean_agreept3[2,1] ` |
+| I would be interested in attending another bcgov useR day.     |    `r Q20tab[1,1]`%   | `r Q20tab[1,2]`% | `r Q20tab[1,3]`% | `r Q20tab[1,4]`% |  `r Q20tab[1,5]`%  | `r mean_agreept3[3,1] ` |
+
+
+<br>
+
+***
+
+<br>
+
+
+^1^ Had a large response rate for "Don't know/Not applicable" (`r round(100*(Q07DK$DKCount/length(data$QCOMP)))`%). <br>
+^2^ Had a large response rate for "Don't know/Not applicable" (`r round(100*(Q08DK$DKCount/length(data$QCOMP)))`%). <br>
+^3^ Had a large response rate for "Don't know/Not applicable" (`r round(100*(Q09DK$DKCount/length(data$QCOMP)))`%). <br>
+^4^ Had a large response rate for "Don't know/Not applicable" (`r round(100*(Q12DK$DKCount/length(data$QCOMP)))`%). <br>
+^5^ Had a large response rate for "Don't know/Not applicable" (`r round(100*(Q15DK$DKCount/length(data$QCOMP)))`%).
+
+<br>
+
+
+
