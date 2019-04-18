@@ -29,8 +29,8 @@ Continuous Service Improvement (CSI) Lab
 
 **10:15am Talks I**
 
-- R from Start-to-Finish: A Case Study Using the Voter List Quality Measurement (*Julie Hawkins*)
-- Reproducible Spatial Analysis with sf and bcmaps (*Andy Teucher*)
+- [R from Start-to-Finish: A Case Study Using the Voter List Quality Measurement (*Julie Hawkins*)](jhawkins_case_study/pdf/jhawkins_case_study.pdf)
+- [Reproducible Spatial Analysis with sf and bcmaps (*Andy Teucher*)](ateucher_sf_bcmaps/pdf/ateucher_sf_bcmaps.pdf)
 - Student Outcomes Dashboard (*Nasim Taba*)
 
 **11am Nutrition Break & Networking**
@@ -39,13 +39,13 @@ Continuous Service Improvement (CSI) Lab
 
 - Analyzing Streamflow Data with fasstr (*Jon Goetz*)
 - Using R to Make a Workflow More Efficient: Work Environment Survey (*Stephanie Yurchak*)
-- Version Control & Sharing Your Code with bcgovr (*Sam Albers*)
+- [Version Control & Sharing Your Code with bcgovr (*Sam Albers*)](salbers_bcgovr/pdf/bcgov_useR_Albers.pdf)
 
 **12:15pm LUNCH (_not provided_)**
 
 **1:30pm Community Building & Discussion**
 
-- Don't Code Alone (*Stephanie Hazlitt*)
+- [Don't Code Alone (*Stephanie Hazlitt*)](shazlitt_dont_code_alone/pdf/shazlitt_dont_code_alone.pdf)
 
 **2pm bcgov [R](https://www.r-project.org/) Help-A-Thon**
 
@@ -74,5 +74,6 @@ _**For Speakers:**_
 
 In the interest of ensuring a safe environment for all,  all attendees, speakers and organisers of the bcgov useR day (Victoria 2018-10-11) must agree to follow the [bcgov standards of conduct](https://www2.gov.bc.ca/gov/content/careers-myhr/about-the-bc-public-service/ethics-standards-of-conduct/standards-of-conduct) and the day’s [code of conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct).
 
-_**Presentation Materials:**_ You can find some of the presentations (slides and/or code) in the [bcgov-useR repository](https://github.com/bcgov/bcgov-useR).
+_**Presentation Materials:**_ You can find some of the presentations (slides and/or code) in the [bcgov-useR repository](https://github.com/bcgov/bcgov-useR/tree/master/2018).
+
 
