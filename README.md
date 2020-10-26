@@ -1,4 +1,4 @@
-<a id="devex-badge" rel="Inspiration" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="An idea being explored and shaped. Open for discussion, but may never go anywhere." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/inspiration.svg" title="An idea being explored and shaped. Open for discussion, but may never go anywhere." /></a>
+![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)
 
 bcgov-useR
 ============================
